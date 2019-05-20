@@ -8,7 +8,7 @@ import android.widget.Button;
 
 public class FirstActivity extends AppCompatActivity {
 
-    Button btSignin,btSignup;
+    Button btSignin,btSignup,btGomain;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +35,16 @@ public class FirstActivity extends AppCompatActivity {
         });
 
 
+        //임시버튼
+        btGomain = (Button)findViewById(R.id.firstactivity_button_gomain);
+        btGomain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent gomain_intent = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(gomain_intent);
+
+            }
+        });
 
     }
 }
