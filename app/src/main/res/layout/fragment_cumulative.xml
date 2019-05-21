@@ -1,15 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFFFFF"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="10"
+        android:orientation="vertical"
+        >
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="357dp"
+            android:layout_weight="3"
+            >
 
-    <TextView
-        android:layout_centerInParent="true"
-        android:text="CUMULATIVE"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            <com.prolificinteractive.materialcalendarview.MaterialCalendarView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/fragmentcumulative_calendar"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                app:mcv_selectionColor="#a9dbf0cb"
+                app:mcv_showOtherDates="defaults" />
+
+        </RelativeLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:layout_gravity="center"
+            >
+
+            <com.github.lzyzsd.circleprogress.ArcProgress
+                android:id="@+id/fragmentcumulative_arcprogress"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="#FFFFFF"
+                app:arc_angle="360"
+                app:arc_bottom_text="달성도 : 0%"
+                app:arc_bottom_text_size="20dp"
+                app:arc_finished_color="#00FF00"
+                app:arc_max="10"
+                app:arc_progress="0"
+                app:arc_stroke_width="10dp"
+
+                app:arc_suffix_text="/10 회"
+                app:arc_suffix_text_padding="20dp"
+                app:arc_suffix_text_size="15dp"
+                app:arc_unfinished_color="#FF0000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.105" />
+
+        </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+
 
 
 </RelativeLayout>
