@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.foottoheart.R;
 import com.github.lzyzsd.circleprogress.ArcProgress;
@@ -27,6 +28,7 @@ public class CumulativeFragment extends Fragment {
 
     MaterialCalendarView materialCalendarView;
     ArcProgress arcProgress;
+    TextView datetextview;
 
     @Nullable
     @Override
@@ -39,9 +41,10 @@ public class CumulativeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         arcProgress = (ArcProgress)getView().findViewById(R.id.fragmentcumulative_arcprogress);
+        datetextview = (TextView)getView().findViewById(R.id.fragmentcumulative_textview_date);
 
         materialCalendarView = (MaterialCalendarView)getView().findViewById(R.id.fragmentcumulative_calendar);
-
+        datetextview.setText(String.format("%04d년 %02d월 %02d일",CalendarDay.today().getYear(),CalendarDay.today().getMonth()+1,CalendarDay.today().getDay()));
         materialCalendarView.addDecorators(
                 new SundayDecorator(),
                 new SaturdayDecorator()
@@ -55,6 +58,7 @@ public class CumulativeFragment extends Fragment {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
                 //임시
+                datetextview.setText(String.format("%04d년 %02d월 %02d일",date.getYear(),date.getMonth()+1,date.getDay()));
                 arcProgress.setVisibility(View.INVISIBLE);
             }
         });
