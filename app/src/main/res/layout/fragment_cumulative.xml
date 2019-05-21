@@ -27,6 +27,15 @@
 
         </RelativeLayout>
 
+        <TextView
+            android:id="@+id/fragmentcumulative_textview_date"
+            android:textSize="20dp"
+            android:text="YYYY년 MM월 DD일"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            />
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
