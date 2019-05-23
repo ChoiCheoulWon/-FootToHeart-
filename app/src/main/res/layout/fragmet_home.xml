@@ -21,7 +21,11 @@
             android:layout_weight="8"
             android:layout_gravity="center"
             >
-
+            <Button
+                android:id="@+id/fragmenthome_button_communication"
+                android:text="우노 통신 액티비티 확인"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <com.github.lzyzsd.circleprogress.ArcProgress
                 android:id="@+id/fragmenthome_arcprogress"
                 android:layout_width="250dp"
