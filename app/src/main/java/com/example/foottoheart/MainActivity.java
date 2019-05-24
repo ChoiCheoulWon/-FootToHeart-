@@ -1,5 +1,6 @@
 package com.example.foottoheart;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
@@ -13,12 +14,15 @@ import android.widget.Toast;
 import com.example.foottoheart.Fragment.CumulativeFragment;
 import com.example.foottoheart.Fragment.FriendFragment;
 import com.example.foottoheart.Fragment.HomeFragment;
+import com.example.foottoheart.News.NewscrawlingActivity;
 
 public class MainActivity extends AppCompatActivity {
     private FragmentManager fm = getSupportFragmentManager();
     private HomeFragment mHomeFragment = new HomeFragment();
     private CumulativeFragment mCumulativeFragment = new CumulativeFragment();
     private FriendFragment mFriendFragment = new FriendFragment();
+
+
 
 
     @Override
@@ -63,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -82,7 +89,8 @@ public class MainActivity extends AppCompatActivity {
                 // 건강 정보
             case R.id.mainactivity_menu_item_healthinfo:
                 Toast.makeText(getApplicationContext(),"건강 정보 클릭",Toast.LENGTH_LONG).show();
-
+                Intent intent = new Intent(getApplicationContext(), NewscrawlingActivity.class);
+                startActivity(intent);
                 break;
                 // 수신함
             case R.id.mainactivity_menu_item_inbox:
