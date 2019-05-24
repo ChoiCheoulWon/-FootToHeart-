@@ -1,6 +1,14 @@
 package com.example.foottoheart;
 
 import android.content.Intent;
+/*
+* 풀 리퀘스트 테스트용 주석
+* 이전에 풀 리퀘스트가 있고, 그 이후에 커밋을 하였을 때 이전 풀리퀘스트와 이후 커밋한 프로젝트가 합병이 가능한지 테스트
+*
+* */
+/*
+    master에서의 작업 커밋
+ */
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
