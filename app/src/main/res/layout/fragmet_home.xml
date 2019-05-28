@@ -52,6 +52,19 @@
 
                 />
 
+            <TextView
+                android:gravity="center"
+                android:id="@+id/fragmenthome_textviw_getnodejs"
+                android:text="가져온텍스트"
+                android:layout_marginTop="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/fragmenthome_button_getnodejs"
+                android:text="nodejs서버에서 가져오기"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <LinearLayout
