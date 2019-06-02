@@ -5,16 +5,15 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".News.NewscrawlingActivity"></activity>
-        <activity android:name=".Esp8266communication" />
-        <activity android:name=".SignupActivity" />
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".SignupActivity"></activity>
+        <activity android:name=".News.NewscrawlingActivity" />
         <activity android:name=".SigninActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".FirstActivity">
@@ -24,7 +23,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

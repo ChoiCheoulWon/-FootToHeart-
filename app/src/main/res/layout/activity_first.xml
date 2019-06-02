@@ -6,15 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FirstActivity"
-
+    android:background="#FFFFFF"
 
     >
-    <Button
-        android:id="@+id/firstactivity_button_gomain"
-        android:text=" 메인화면 강제로 가기"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <ImageView
         android:layout_marginTop="100dp"
         android:layout_width="match_parent"
@@ -24,6 +18,7 @@
 
 
     <LinearLayout
+        android:layout_marginBottom="30dp"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

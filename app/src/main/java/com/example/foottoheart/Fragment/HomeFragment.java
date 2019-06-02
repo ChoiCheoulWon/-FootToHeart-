@@ -3,7 +3,6 @@ package com.example.foottoheart.Fragment;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.renderscript.ScriptGroup;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,39 +12,35 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.foottoheart.MainActivity;
 import com.example.foottoheart.R;
-import com.example.foottoheart.Esp8266communication;
+import com.example.foottoheart.SigninActivity;
 import com.github.lzyzsd.circleprogress.ArcProgress;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class HomeFragment extends Fragment {
 
-    int count = 0;
-    Button unocommunication;
-    MainActivity mainActivity;
+    static int count = 0;
 
-    /* 통신을 위한 변수*/
-    TextView getText;
-    Button btgetText;
+    String UserId;
 
+    int Set = 0;
 
-
-
+    TimerTask timerTask;
+    Timer timer;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -58,43 +53,53 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Button controller = (Button)getView().findViewById(R.id.controller);
+
+        count = 0;
+        UserId = ((MainActivity)getActivity()).UserId;
+
+        Log.i("UserIdTest2",UserId);
+
+
         final ArcProgress arcProgress = (ArcProgress)getView().findViewById(R.id.fragmenthome_arcprogress);
-        controller.setOnClickListener(new View.OnClickListener() {
+
+/*
+        String line = "{\"nickname\":\",\"gucheol\",\"time\":\"2019-06-01\",\"Total\":4}";
+        // String 분석
+        String nickname = line.split("\"")[4];
+        String time = line.split("\"")[8];
+        String total_s = line.split(":")[3];
+        int temp = total_s.length();
+        total_s = total_s.split("\\}")[0];
+        int total = Integer.parseInt(total_s);
+*/
+        /* nodejs와 통신 코드 연습 */
+
+
+
+
+        timerTask = new TimerTask() {
             @Override
-            public void onClick(View v) {
-                count++;
+            public void run() {
+                //String Date = String.format("%04d-%02d-%02d", CalendarDay.today().getYear(),CalendarDay.today().getMonth()+1,CalendarDay.today().getDay());
+                String url = "http://34.216.194.87:3000/users"+ "/" + UserId;
+                Log.i("Test", "URL = " + url);
+                new JSONTask().execute(url);
+                Log.i("Test","1초마다 db에서 가져온다!" + Set++ + "Count = " + count);
                 arcProgress.setProgress(count);
                 arcProgress.setBottomText("달성도 : "+ (int)(count/(float)arcProgress.getMax()*100) + "%");
             }
-        });
-
-        unocommunication = (Button)getView().findViewById(R.id.fragmenthome_button_communication);
-        unocommunication.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent commu_intent =  new Intent(getActivity().getApplicationContext(), Esp8266communication.class);
-                startActivity(commu_intent);
-
-            }
-        });
+        };
+        timer = new Timer();
+        timer.schedule(timerTask,1000,1000);
 
 
-        /* nodejs와 통신 코드 연습 */
+    }
 
-        getText = (TextView)getView().findViewById(R.id.fragmenthome_textviw_getnodejs);
-        btgetText = (Button)getView().findViewById(R.id.fragmenthome_button_getnodejs);
-        getText.setMovementMethod(new ScrollingMovementMethod());
-        btgetText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new JSONTask().execute("http://34.216.194.87:3000/data");
-            }
-        });
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
 
-
-
-
+        timer.cancel();
     }
 
     public class JSONTask extends AsyncTask<String, String, String>{
@@ -127,7 +132,8 @@ public class HomeFragment extends Fragment {
 
                     //아래라인은 실제 reader에서 데이터를 가져오는 부분이다. 즉 node.js서버로부터 데이터를 가져온다.
                     while((line = reader.readLine()) != null){
-
+                        count = Integer.parseInt(line);
+                        Log.i("Count", "Count = " + count);
                         buffer.append(line);
                         buffer.append(System.getProperty("line.separator"));
                         /*
@@ -168,15 +174,11 @@ public class HomeFragment extends Fragment {
             return null;
         }
 
-
-        //doInBackground메소드가 끝나면 여기로 와서 텍스트뷰의 값을 바꿔준다.
-
         @Override
 
         protected void onPostExecute(String result) {
 
             super.onPostExecute(result);
-            getText.setText(result);
         }
 
     }

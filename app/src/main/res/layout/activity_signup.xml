@@ -1,54 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".SignupActivity">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_marginTop="200dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        >
-
+        android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/signupactivity_edittext_id"
-            android:hint="아이디"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            />
-
-        <EditText
-            android:id="@+id/signupactivity_edittext_password"
-            android:hint="비밀번호"
-            android:inputType="textPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            />
-
-        <EditText
-            android:id="@+id/signupactivity_edittext_name"
-            android:hint="이름"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            />
-
-        <Button
-            android:id="@+id/signupactivity_button_signup"
-            android:text="회원가입 하기"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            />
+            android:textSize="30dp"
+            android:layout_gravity="center"
+            android:id="@+id/activitysignup_edittext_id"
+            android:hint="아이디"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+        <Button
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textSize="30dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:id="@+id/activitysignup_button_signup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="회원가입 하기" />
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

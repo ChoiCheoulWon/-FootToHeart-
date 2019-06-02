@@ -21,17 +21,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="8"
             android:layout_gravity="center"
-            android:orientation="vertical"
+
 
             >
-            <Button
-                android:id="@+id/fragmenthome_button_communication"
-                android:text="우노 통신 액티비티 확인"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="100dp"
-                />
             <com.github.lzyzsd.circleprogress.ArcProgress
                 android:id="@+id/fragmenthome_arcprogress"
                 android:layout_width="250dp"
@@ -43,10 +35,12 @@
                 app:arc_unfinished_color="#FF0000"
                 app:arc_bottom_text_size="20dp"
                 app:arc_progress="0"
-                app:arc_max="10"
                 app:arc_suffix_text_size="15dp"
                 app:arc_stroke_width="10dp"
-                app:arc_suffix_text="/10 회"
+
+                app:arc_max="5000"
+                app:arc_suffix_text="/5000 회"
+
                 app:arc_suffix_text_padding="20dp"
                 app:arc_bottom_text="달성도 : 0%"
 
@@ -54,38 +48,8 @@
 
 
         </LinearLayout>
-        <TextView
-            android:gravity="center"
-            android:id="@+id/fragmenthome_textviw_getnodejs"
-            android:text="가져온텍스트"
-            android:textSize="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:scrollbars="vertical"
-            />
-
-        <Button
-            android:id="@+id/fragmenthome_button_getnodejs"
-            android:text="nodejs서버에서 가져오기"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            >
-            <Button
-                android:id="@+id/controller"
-                android:text="증가"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
 
 
-
-        </LinearLayout>
 
 
     </LinearLayout>
