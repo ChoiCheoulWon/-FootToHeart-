@@ -1,6 +1,7 @@
 package com.example.foottoheart;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.foottoheart.Fragment.HomeFragment;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -70,7 +73,8 @@ public class Esp8266communication extends AppCompatActivity {
                 android.R.layout.simple_list_item_1 );
         mMessageListview.setAdapter(mConversationArrayAdapter);
 
-        new Thread(new ConnectThread("192.168.43.75", 8888)).start();
+        new Thread(new ConnectThread("192.168.43.172", 8888)).start();
+
     }
 
     @Override
@@ -78,6 +82,8 @@ public class Esp8266communication extends AppCompatActivity {
         super.onDestroy();
 
         isConnected = false;
+
+
     }
 
 
@@ -85,12 +91,15 @@ public class Esp8266communication extends AppCompatActivity {
     @Override
     public void onBackPressed(){
 
+
+
+
         if (back_pressed + 2000 > System.currentTimeMillis()){
             super.onBackPressed();
-
             Log.d(TAG, "onBackPressed:");
-            isConnected = false;
 
+            //isConnected = false;
+            new Thread(new SenderThread("-")).start();
             finish();
         }
         else{
