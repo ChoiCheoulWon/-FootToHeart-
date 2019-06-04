@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFFFFF"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="10"
+        android:orientation="vertical"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="357dp"
+            android:layout_weight="3"
+            >
+
+            <TextView
+                android:layout_marginLeft="50dp"
+                android:id="@+id/activityfriendcumulative_textview_friendid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="친구 누구누구"
+                android:textSize="20dp"
+                android:gravity="center"
+
+                />
+            <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                android:layout_below="@+id/activityfriendcumulative_textview_friendid"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/activityfriendcumulative_calendar"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                app:mcv_selectionColor="#a9dbf0cb"
+                app:mcv_showOtherDates="defaults" />
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/activityfriendcumulative_textview_date"
+            android:textSize="20dp"
+            android:text="YYYY년 MM월 DD일"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            />
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:layout_gravity="center"
+            >
+
+            <com.github.lzyzsd.circleprogress.ArcProgress
+                android:id="@+id/activityfriendcumulative_arcprogress"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="#FFFFFF"
+                app:arc_angle="360"
+                app:arc_bottom_text="달성도 : 0%"
+                app:arc_bottom_text_size="20dp"
+                app:arc_finished_color="#00FF00"
+
+                app:arc_progress="0"
+                app:arc_stroke_width="10dp"
+
+                app:arc_max="5000"
+                app:arc_suffix_text="/5000 회"
+                app:arc_suffix_text_padding="20dp"
+                app:arc_suffix_text_size="15dp"
+                app:arc_unfinished_color="#FF0000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.105" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

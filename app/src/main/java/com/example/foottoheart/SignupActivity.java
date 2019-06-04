@@ -59,14 +59,14 @@ public class SignupActivity extends AppCompatActivity {
 
                 UserId = msignupid.getText().toString();
 
-                if ( UserId.length() > 0 ) {
+                /*if ( UserId.length() > 0 ) {
 
                     if (!isConnected) showErrorDialog("서버로 접속된후 다시 해보세요.");
                     else {
-                        new Thread(new SenderThread(UserId)).start();
+                        //new Thread(new SenderThread(UserId)).start();
                     }
                 }
-
+                */
 
                 String url = "http://34.216.194.87:3000/add"+ "/" + UserId;
                 Log.i("Test", "URL = " + url);
@@ -90,14 +90,14 @@ public class SignupActivity extends AppCompatActivity {
         });
 
 
-        new Thread(new ConnectThread("192.168.43.117", 8888)).start();
+        //new Thread(new ConnectThread("192.168.43.117", 8888)).start();
 
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        new Thread(new SenderThread("-")).start();
+        //new Thread(new SenderThread("-")).start();
         isConnected = false;
     }
 

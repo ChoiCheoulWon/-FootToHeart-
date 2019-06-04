@@ -58,14 +58,18 @@ public class SigninActivity extends AppCompatActivity {
         mSignin.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 UserId = mloginid.getText().toString();
+                /*
+
                 if ( UserId.length() > 0 ) {
                     Log.i("Test","UserId = " + UserId);
+
                     if (!isConnected) showErrorDialog("서버로 접속된후 다시 해보세요.");
                     else {
                         Log.i("Test","Sender thread 시작 들어옴");
                         new Thread(new SenderThread(UserId)).start();
                     }
                 }
+                */
                 String url = "http://34.216.194.87:3000/users"+ "/" + UserId;
                 Log.i("Test", "URL = " + url);
                 new JSONTask().execute(url);
@@ -91,13 +95,13 @@ public class SigninActivity extends AppCompatActivity {
         });
 
 
-        new Thread(new ConnectThread("192.168.43.117", 8888)).start();
+        //new Thread(new ConnectThread("192.168.43.117", 8888)).start();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        new Thread(new SenderThread("-")).start();
+        //new Thread(new SenderThread("-")).start();
         isConnected = false;
     }
 

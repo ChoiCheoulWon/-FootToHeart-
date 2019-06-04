@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingTop="20dp"
+    android:paddingLeft="50dp"
+    android:id="@+id/fragmentfriend_textview_listcontent"
+    android:textSize="20dp"
+    android:layout_marginTop="10dp"
+    android:text="아이디"
+    android:layout_width="match_parent"
+    android:layout_height="65dp"
+    />
