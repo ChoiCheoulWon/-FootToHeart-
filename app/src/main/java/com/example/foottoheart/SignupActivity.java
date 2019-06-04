@@ -2,6 +2,7 @@ package com.example.foottoheart;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
@@ -11,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -46,6 +46,8 @@ public class SignupActivity extends AppCompatActivity {
 
 
     public String UserId;
+
+    FirstActivity mFirstActivitiy = (FirstActivity)FirstActivity.mFirstActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,10 +81,21 @@ public class SignupActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(),"이미 동일한 아이디가 존재합니다.",Toast.LENGTH_LONG).show();
                         }
                         else{
-                            Intent gomain_intent = new Intent(getApplicationContext(), MainActivity.class);
-                            gomain_intent.putExtra("UserId", UserId);
-                            startActivity(gomain_intent);
-                            finish();
+                            SharedPreferences preferences = getSharedPreferences("ID", MODE_PRIVATE);
+
+                            SharedPreferences.Editor editor = preferences.edit();
+
+                            editor.putString("ID", UserId);
+
+                            if (editor.commit()) {
+                                Intent gomain_intent = new Intent(getApplicationContext(), MainActivity.class);
+                                gomain_intent.putExtra("UserId", UserId);
+                                gomain_intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                startActivity(gomain_intent);
+                                mFirstActivitiy.finish();
+                                finish();
+                            }
+
                         }
                     }
                 },1000);

@@ -10,6 +10,7 @@ import android.content.Intent;
     master에서의 작업 커밋
  */
 
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
@@ -19,6 +20,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.foottoheart.Fragment.CumulativeFragment;
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private FriendFragment mFriendFragment = new FriendFragment();
 
     public String UserId;
-
+    TextView mUserid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
         UserId = intent.getStringExtra("UserId");
         Log.i("Usertest",UserId);
 
+
+        mUserid = (TextView)findViewById(R.id.mainactivity_UserId);
+        mUserid.setText(UserId + " 님");
 
         FragmentTransaction transaction = fm.beginTransaction();
         transaction.replace(R.id.mainactivity_framelayout,mHomeFragment).commit();
@@ -77,12 +82,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
     }
-
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.mainactivity_menu_item_healthinfo:
                 Toast.makeText(getApplicationContext(),"건강 정보 클릭",Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getApplicationContext(), NewscrawlingActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
                 break;
             // 수신함
@@ -116,6 +117,18 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"설정 클릭",Toast.LENGTH_LONG).show();
                 break;
 
+            // 로그아웃
+            case R.id.mainactivity_menu_item_logout:
+                SharedPreferences preferences = getSharedPreferences("ID", MODE_PRIVATE);
+
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("ID", null);
+                editor.commit();
+                Intent intent_first = new Intent(getApplicationContext(),FirstActivity.class);
+                intent_first.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent_first);
+                finish();
+                break;
         }
 
         return super.onOptionsItemSelected(item);

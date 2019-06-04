@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -44,7 +43,6 @@ public class FriendFragment extends Fragment {
     private String UserId;
     String friendid;
     private int count = 0;
-    String[] friend;
 
 
     @Nullable
@@ -83,6 +81,7 @@ public class FriendFragment extends Fragment {
                 Log.i("click","클릭");
                 Intent intent = new Intent(getContext(), FriendCumulativeActivity.class);
                 intent.putExtra("friendid",mFriendList.get(position));
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
         });
@@ -90,6 +89,7 @@ public class FriendFragment extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.i("click","롱클릭");
+                deletefrienddialog(mFriendList.get(position));
                 return true;
             }
         });
@@ -157,7 +157,7 @@ public class FriendFragment extends Fragment {
                                     if(flag_success){
                                         mFriendList.add(friendid);
                                         mArrayAdapter.notifyDataSetChanged();
-                                        successdialog();
+                                        addsuccessdialog();
                                     }
 
                                 }
@@ -166,7 +166,58 @@ public class FriendFragment extends Fragment {
         builder.show();
     }
 
-    private void successdialog() {
+    private void deletefrienddialog(final String friend) {
+        final EditText edittext = new EditText(getContext());
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("친구삭제");
+        builder.setMessage("친구 " + friend +"를 삭제하시겠습니까?");
+        builder.setView(edittext);
+
+        builder.setNegativeButton("취소",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        builder.setPositiveButton("확인",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+
+                        String url = "http://34.216.194.87:3000/delete"+ "/" + UserId + "/" + friend;
+                        Log.i("delete", "URL = " + url);
+                        count = 0;
+                        new JSONTask2().execute(url);
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        if(count == 1) {
+                            // mfriendlist에 그 아이디 삭제해주고 다시 리스트 보여주기!
+
+                            mFriendList.remove(friend);
+                            mArrayAdapter.notifyDataSetChanged();
+                            deletesuccessdialog();
+                        }
+                    }
+                });
+        builder.show();
+    }
+
+    private void deletesuccessdialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("친구삭제 성공");
+        builder.setMessage("친구를 삭제에 성공했습니다.");
+        builder.setPositiveButton("확인",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+        builder.show();
+    }
+    private void addsuccessdialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("친구등록 성공");
         builder.setMessage("새로운 친구를 추가했습니다.");
@@ -356,5 +407,7 @@ public class FriendFragment extends Fragment {
         }
 
     }
+
+
 
 }

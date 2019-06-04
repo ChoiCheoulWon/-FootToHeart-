@@ -25,4 +25,10 @@
         android:orderInCategory="100"
         android:title="설정"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/mainactivity_menu_item_logout"
+        android:orderInCategory="100"
+        android:title="로그아웃"
+        app:showAsAction="never" />
 </menu>

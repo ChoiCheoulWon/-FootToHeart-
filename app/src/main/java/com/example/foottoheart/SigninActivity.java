@@ -2,6 +2,7 @@ package com.example.foottoheart;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
@@ -45,6 +46,9 @@ public class SigninActivity extends AppCompatActivity {
 
     int iscorrect = 0;
 
+
+    FirstActivity mFirstActivitiy = (FirstActivity)FirstActivity.mFirstActivity;
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -84,10 +88,25 @@ public class SigninActivity extends AppCompatActivity {
                         else{
 
 
-                            Intent gomain_intent = new Intent(getApplicationContext(), MainActivity.class);
-                            gomain_intent.putExtra("UserId", UserId);
-                            startActivity(gomain_intent);
-                            finish();
+
+                            SharedPreferences preferences = getSharedPreferences("ID", MODE_PRIVATE);
+
+                            SharedPreferences.Editor editor = preferences.edit();
+
+                            editor.putString("ID", UserId);
+
+                            if (editor.commit()) {
+                                Intent gomain_intent = new Intent(getApplicationContext(), MainActivity.class);
+                                gomain_intent.putExtra("UserId", UserId);
+                                gomain_intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                startActivity(gomain_intent);
+
+                                mFirstActivitiy.finish();
+                                finish();
+                            }
+
+
+
                         }
                     }
                 },1000);

@@ -6,26 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <EditText
+    <TextView
         android:id="@+id/mainactivity_UserId"
-        android:layout_width="1dp"
-        android:layout_height="1dp"
-        android:textColor="#FFFFFF"
-        android:text="Hello"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="UserID"
+        android:gravity="right"
+        android:layout_marginRight="30dp"
         />
     <LinearLayout
+        android:layout_below="@id/mainactivity_UserId"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/mainactivity_bottomnavigationview">
 
         <FrameLayout
+
             android:id="@+id/mainactivity_framelayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-
-
-
-
 
 
     </LinearLayout>
@@ -35,12 +34,8 @@
         android:id="@+id/mainactivity_bottomnavigationview"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_navigation_main"
-
         android:layout_marginBottom="5dp"
         >
-
-
-
     </android.support.design.widget.BottomNavigationView>
 </RelativeLayout>
 
