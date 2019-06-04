@@ -85,6 +85,7 @@ public class HomeFragment extends Fragment {
                 Log.i("Test", "URL = " + url);
                 new JSONTask().execute(url);
                 Log.i("Test","1초마다 db에서 가져온다!" + Set++ + "Count = " + count);
+                if(count == -1) count = 0;
                 arcProgress.setProgress(count);
                 arcProgress.setBottomText("달성도 : "+ (int)(count/(float)arcProgress.getMax()*100) + "%");
             }

@@ -1,8 +1,10 @@
 package com.example.foottoheart;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,12 +15,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.net.UnknownHostException;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -26,6 +34,17 @@ public class SignupActivity extends AppCompatActivity {
 
     EditText msignupid;
     Button mSignup;
+
+    private static final String TAG = "TcpClient";
+    private boolean isConnected = false;
+
+    private String mServerIP = null;
+    private Socket mSocket = null;
+    private PrintWriter mOut;
+    private BufferedReader mIn;
+    private Thread mReceiverThread = null;
+
+
     public String UserId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +58,15 @@ public class SignupActivity extends AppCompatActivity {
             public void onClick(View v){
 
                 UserId = msignupid.getText().toString();
+
+                if ( UserId.length() > 0 ) {
+
+                    if (!isConnected) showErrorDialog("서버로 접속된후 다시 해보세요.");
+                    else {
+                        new Thread(new SenderThread(UserId)).start();
+                    }
+                }
+
 
                 String url = "http://34.216.194.87:3000/add"+ "/" + UserId;
                 Log.i("Test", "URL = " + url);
@@ -54,6 +82,7 @@ public class SignupActivity extends AppCompatActivity {
                             Intent gomain_intent = new Intent(getApplicationContext(), MainActivity.class);
                             gomain_intent.putExtra("UserId", UserId);
                             startActivity(gomain_intent);
+                            finish();
                         }
                     }
                 },1000);
@@ -61,11 +90,169 @@ public class SignupActivity extends AppCompatActivity {
         });
 
 
-
-        //new Thread(new ConnectThread("192.168.43.117", 8888)).start();
+        new Thread(new ConnectThread("192.168.43.117", 8888)).start();
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        new Thread(new SenderThread("-")).start();
+        isConnected = false;
+    }
+
+
+    private class ConnectThread implements Runnable {
+
+        private String serverIP;
+        private int serverPort;
+
+        ConnectThread(String ip, int port) {
+            serverIP = ip;
+            serverPort = port;
+
+
+        }
+
+        @Override
+        public void run() {
+
+            try {
+
+                mSocket = new Socket(serverIP, serverPort);
+                //ReceiverThread: java.net.SocketTimeoutException: Read timed out 때문에 주석처리
+                //mSocket.setSoTimeout(3000);
+
+                mServerIP = mSocket.getRemoteSocketAddress().toString();
+
+            } catch( UnknownHostException e )
+            {
+                Log.d(TAG,  "ConnectThread: can't find host");
+            }
+            catch( SocketTimeoutException e )
+            {
+                Log.d(TAG, "ConnectThread: timeout");
+            }
+            catch (Exception e) {
+
+                Log.e(TAG, ("ConnectThread:" + e.getMessage()));
+            }
+
+
+            if (mSocket != null) {
+
+                try {
+
+                    mOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(mSocket.getOutputStream(), "UTF-8")), true);
+                    mIn = new BufferedReader(new InputStreamReader(mSocket.getInputStream(), "UTF-8"));
+
+                    isConnected = true;
+                } catch (IOException e) {
+
+                    Log.e(TAG, ("ConnectThread:" + e.getMessage()));
+                }
+            }
+
+
+            runOnUiThread(new Runnable() {
+
+                @Override
+                public void run() {
+
+                    if (isConnected) {
+
+                        Log.d(TAG, "connected to " + serverIP);
+
+                        mReceiverThread = new Thread(new ReceiverThread());
+                        mReceiverThread.start();
+                    }else{
+
+                        Log.d(TAG, "failed to connect to server " + serverIP);
+                    }
+
+                }
+            });
+        }
+    }
+
+
+    private class SenderThread implements Runnable {
+
+        private String msg;
+
+        SenderThread(String msg) {
+            this.msg = msg;
+        }
+
+        @Override
+        public void run() {
+
+            mOut.println(this.msg);
+            mOut.flush();
+
+        }
+    }
+
+
+    private class ReceiverThread implements Runnable {
+
+        @Override
+        public void run() {
+
+            try {
+
+                while (isConnected) {
+
+                    if ( mIn ==  null ) {
+
+                        Log.d(TAG, "ReceiverThread: mIn is null");
+                        break;
+                    }
+
+                    final String recvMessage =  mIn.readLine();
+                }
+
+                Log.d(TAG, "ReceiverThread: thread has exited");
+                if (mOut != null) {
+                    mOut.flush();
+                    mOut.close();
+                }
+
+                mIn = null;
+                mOut = null;
+
+                if (mSocket != null) {
+                    try {
+                        mSocket.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            catch (IOException e) {
+
+                Log.e(TAG, "ReceiverThread: "+ e);
+            }
+        }
+
+    }
+
+
+    public void showErrorDialog(String message)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Error");
+        builder.setCancelable(false);
+        builder.setMessage(message);
+        builder.setPositiveButton("OK",  new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                finish();
+            }
+        });
+        builder.create().show();
+    }
 
 
     public class JSONTask extends AsyncTask<String, String, String> {

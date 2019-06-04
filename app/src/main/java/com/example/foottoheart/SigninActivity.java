@@ -57,12 +57,19 @@ public class SigninActivity extends AppCompatActivity {
         Button mSignin = (Button)findViewById(R.id.activitysignin_button_login);
         mSignin.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-
                 UserId = mloginid.getText().toString();
-
+                if ( UserId.length() > 0 ) {
+                    Log.i("Test","UserId = " + UserId);
+                    if (!isConnected) showErrorDialog("서버로 접속된후 다시 해보세요.");
+                    else {
+                        Log.i("Test","Sender thread 시작 들어옴");
+                        new Thread(new SenderThread(UserId)).start();
+                    }
+                }
                 String url = "http://34.216.194.87:3000/users"+ "/" + UserId;
                 Log.i("Test", "URL = " + url);
                 new JSONTask().execute(url);
+
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -71,23 +78,26 @@ public class SigninActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(),"아이디를 제대로 입력해주세요",Toast.LENGTH_LONG).show();
                         }
                         else{
+
+
                             Intent gomain_intent = new Intent(getApplicationContext(), MainActivity.class);
                             gomain_intent.putExtra("UserId", UserId);
                             startActivity(gomain_intent);
+                            finish();
                         }
                     }
-                },500);
+                },1000);
             }
         });
 
-        //new Thread(new ConnectThread("192.168.43.117", 8888)).start();
 
+        new Thread(new ConnectThread("192.168.43.117", 8888)).start();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //      new Thread(new SenderThread("-")).start();
+        new Thread(new SenderThread("-")).start();
         isConnected = false;
     }
 
@@ -179,9 +189,10 @@ public class SigninActivity extends AppCompatActivity {
         @Override
         public void run() {
 
+            Log.i("Test","sender run 들어옴");
             mOut.println(this.msg);
             mOut.flush();
-
+            Log.i("Test","sender run 나감");
         }
     }
 
