@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     public String UserId;
     TextView mUserid;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,25 +97,12 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         switch (id){
-            // 상품
-            case R.id.mainactivity_menu_item_present:
-                Toast.makeText(getApplicationContext(),"상품 클릭",Toast.LENGTH_LONG).show();
-                break;
             // 건강 정보
             case R.id.mainactivity_menu_item_healthinfo:
                 Toast.makeText(getApplicationContext(),"건강 정보 클릭",Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getApplicationContext(), NewscrawlingActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
-                break;
-            // 수신함
-            case R.id.mainactivity_menu_item_inbox:
-                Toast.makeText(getApplicationContext(),"수신함 클릭",Toast.LENGTH_LONG).show();
-
-                break;
-            // 설정
-            case R.id.mainactivity_menu_item_setting:
-                Toast.makeText(getApplicationContext(),"설정 클릭",Toast.LENGTH_LONG).show();
                 break;
 
             // 로그아웃

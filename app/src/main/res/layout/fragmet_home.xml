@@ -17,18 +17,17 @@
 
         <!-- 버튼 삭제시 orientation 삭제 필요 -->
         <LinearLayout
+            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="8"
             android:layout_gravity="center"
-
-
             >
             <com.github.lzyzsd.circleprogress.ArcProgress
+                android:layout_marginTop="180dp"
                 android:id="@+id/fragmenthome_arcprogress"
                 android:layout_width="250dp"
                 android:layout_height="250dp"
-                android:layout_gravity="center"
                 android:background="#FFFFFF"
                 app:arc_angle="360"
                 app:arc_finished_color="#00FF00"
@@ -43,13 +42,17 @@
 
                 app:arc_suffix_text_padding="20dp"
                 app:arc_bottom_text="달성도 : 0%"
-
                 />
-
 
         </LinearLayout>
 
-
+        <TextView
+            android:id="@+id/fragmenthome_textview_monday"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:text=""
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
 
     </LinearLayout>
