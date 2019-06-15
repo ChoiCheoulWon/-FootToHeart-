@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
 
 
 import com.example.foottoheart.R;
@@ -52,7 +51,6 @@ public class NewscrawlingActivity extends AppCompatActivity implements NewsAdapt
 
     @Override
     public void onNewsViewtextClicked(int position) {
-        Toast.makeText(this,"기사 보기 클릭" + position,Toast.LENGTH_LONG).show();
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(form.get(position).getUrl()));
         startActivity(intent);
 

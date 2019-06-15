@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +60,7 @@ public class FriendFragment extends Fragment {
         mFriendList = new ArrayList<>();
         UserId = ((MainActivity)getActivity()).UserId;
         String url = "http://34.216.194.87:3000/getfriend"+ "/" + UserId;
-        Log.i("Test", "URL = " + url);
+
         new JSONTask().execute(url);
         try {
             Thread.sleep(500);
@@ -77,8 +76,6 @@ public class FriendFragment extends Fragment {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("Test",""+mFriendList.get(position));
-                Log.i("click","클릭");
                 Intent intent = new Intent(getContext(), FriendCumulativeActivity.class);
                 intent.putExtra("friendid",mFriendList.get(position));
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -88,7 +85,6 @@ public class FriendFragment extends Fragment {
         mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("click","롱클릭");
                 deletefrienddialog(mFriendList.get(position));
                 return true;
             }
@@ -100,7 +96,7 @@ public class FriendFragment extends Fragment {
             public void onClick(View v) {
                 // dialog를 띄워서 친구 아이디를 검색해준다.
                 addfrienddialog();
-                Log.i("test","버튼클릭");
+
             }
         });
     }
@@ -123,12 +119,12 @@ public class FriendFragment extends Fragment {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         friendid = edittext.getText().toString();
-                        Log.i("dialog",friendid);
+
                         //Toast.makeText(getApplicationContext(),edittext.getText().toString() ,Toast.LENGTH_LONG).show();
                         // db에서 이 사용자 아이디가 있으면 리스트에 추가해준다.
 
                         String url = "http://34.216.194.87:3000/friend"+ "/" + UserId + "/" + friendid;
-                        Log.i("Test", "URL = " + url);
+
                         new JSONTask2().execute(url);
 
                         try {
@@ -137,7 +133,6 @@ public class FriendFragment extends Fragment {
                             e.printStackTrace();
                         }
                         // db에 없을경우 등록취소 dialog를 띄워준다.
-                                Log.i("Count2",""+count);
                                 if(count == -1){
                                     // 등록된 아이디가 없는경우
                                     faildialog();
@@ -172,7 +167,6 @@ public class FriendFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("친구삭제");
         builder.setMessage("친구 " + friend +"를 삭제하시겠습니까?");
-        builder.setView(edittext);
 
         builder.setNegativeButton("취소",
                 new DialogInterface.OnClickListener() {
@@ -186,7 +180,7 @@ public class FriendFragment extends Fragment {
 
 
                         String url = "http://34.216.194.87:3000/delete"+ "/" + UserId + "/" + friend;
-                        Log.i("delete", "URL = " + url);
+
                         count = 0;
                         new JSONTask2().execute(url);
                         try {
@@ -247,7 +241,7 @@ public class FriendFragment extends Fragment {
         builder.setPositiveButton("확인",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Log.i("dialog","예를 선택했습니다.");
+
                     }
                 });
         builder.show();

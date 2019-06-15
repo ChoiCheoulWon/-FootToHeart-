@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.text.style.ForegroundColorSpan;
 
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +61,6 @@ public class CumulativeFragment extends Fragment {
         String date = String.format("%04d-%02d-%02d",CalendarDay.today().getYear(),CalendarDay.today().getMonth()+1,CalendarDay.today().getDay());
         datetextview.setText(String.format("%04d년 %02d월 %02d일",CalendarDay.today().getYear(),CalendarDay.today().getMonth()+1,CalendarDay.today().getDay()));
         String url = "http://34.216.194.87:3000/month"+ "/" + date + "/" + UserId;
-        Log.i("Test", "URL = " + url);
         new JSONTask().execute(url);
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -89,7 +87,6 @@ public class CumulativeFragment extends Fragment {
                 datetextview.setText(String.format("%04d년 %02d월 %02d일",date.getYear(),date.getMonth()+1,date.getDay()));
                 String Date = String.format("%04d-%02d-%02d",date.getYear(),date.getMonth()+1,date.getDay());
                 String url = "http://34.216.194.87:3000/month"+ "/" + Date + "/" + UserId;
-                Log.i("Test", "URL = " + url);
                 new JSONTask().execute(url);
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -177,18 +174,10 @@ public class CumulativeFragment extends Fragment {
                     while((line = reader.readLine()) != null){
                         count = Integer.parseInt(line);
                         if(count == -1) count = 0;
-                        Log.i("Count", "Count = " + count);
                         buffer.append(line);
                         buffer.append(System.getProperty("line.separator"));
-                        /*
-                            {"id":0,"nickname':"abc","left_num:1,"right_num:0,"time":"2019-05-30T14:13:09.000Z","todal":null}
-                            과 같은 식의 데이터 들어옴.
 
-                         */
                     }
-                    Log.i("line",buffer.toString());
-                    //다 가져오면 String 형변환을 수행한다. 이유는 protected String doInBackground(String... urls) 니까
-
 
                     return buffer.toString();
 

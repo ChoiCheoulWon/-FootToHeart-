@@ -60,8 +60,8 @@
                 app:arc_progress="0"
                 app:arc_stroke_width="10dp"
 
-                app:arc_max="5000"
-                app:arc_suffix_text="/5000 회"
+                app:arc_max="2400"
+                app:arc_suffix_text="/2400 회"
                 app:arc_suffix_text_padding="20dp"
                 app:arc_suffix_text_size="15dp"
                 app:arc_unfinished_color="#FF0000"

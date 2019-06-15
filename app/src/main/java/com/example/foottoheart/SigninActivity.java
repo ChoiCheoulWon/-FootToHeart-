@@ -74,14 +74,17 @@ public class SigninActivity extends AppCompatActivity {
                     }
                 }
                 */
-                String url = "http://34.216.194.87:3000/users"+ "/" + UserId;
-                Log.i("Test", "URL = " + url);
-                new JSONTask().execute(url);
 
+                String url = "http://34.216.194.87:3000/users"+ "/" + UserId;
+                new JSONTask().execute(url);
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Log.i("Test","iscorrect = " + iscorrect);
                         if(iscorrect == -1) {
                             Toast.makeText(getApplicationContext(),"아이디를 제대로 입력해주세요",Toast.LENGTH_LONG).show();
                         }
@@ -112,6 +115,9 @@ public class SigninActivity extends AppCompatActivity {
                 },1000);
             }
         });
+
+        //임시로 연결성공했을 때의 화면을 보여줌.
+        mConnectionStatus.setText("connected to " + "192.168.43.117");
 
 
         //new Thread(new ConnectThread("192.168.43.117", 8888)).start();
@@ -212,10 +218,8 @@ public class SigninActivity extends AppCompatActivity {
         @Override
         public void run() {
 
-            Log.i("Test","sender run 들어옴");
             mOut.println(this.msg);
             mOut.flush();
-            Log.i("Test","sender run 나감");
         }
     }
 
@@ -314,15 +318,8 @@ public class SigninActivity extends AppCompatActivity {
                         iscorrect = Integer.parseInt(line);
                         buffer.append(line);
                         buffer.append(System.getProperty("line.separator"));
-                        /*
-                            {"id":0,"nickname':"abc","left_num:1,"right_num:0,"time":"2019-05-30T14:13:09.000Z","todal":null}
-                            과 같은 식의 데이터 들어옴.
 
-                         */
                     }
-                    Log.i("line",buffer.toString());
-                    //다 가져오면 String 형변환을 수행한다. 이유는 protected String doInBackground(String... urls) 니까
-
 
                     return buffer.toString();
 

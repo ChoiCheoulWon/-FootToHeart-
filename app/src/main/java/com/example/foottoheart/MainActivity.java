@@ -1,14 +1,6 @@
 package com.example.foottoheart;
 
 import android.content.Intent;
-/*
- * 풀 리퀘스트 테스트용 주석
- * 이전에 풀 리퀘스트가 있고, 그 이후에 커밋을 하였을 때 이전 풀리퀘스트와 이후 커밋한 프로젝트가 합병이 가능한지 테스트
- *
- * */
-/*
-    master에서의 작업 커밋
- */
 
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
@@ -17,11 +9,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.foottoheart.Fragment.CumulativeFragment;
 import com.example.foottoheart.Fragment.FriendFragment;
@@ -48,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         UserId = intent.getStringExtra("UserId");
-        Log.i("Usertest",UserId);
-
 
         mUserid = (TextView)findViewById(R.id.mainactivity_UserId);
         mUserid.setText(UserId + " 님");
@@ -99,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
         switch (id){
             // 건강 정보
             case R.id.mainactivity_menu_item_healthinfo:
-                Toast.makeText(getApplicationContext(),"건강 정보 클릭",Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getApplicationContext(), NewscrawlingActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);

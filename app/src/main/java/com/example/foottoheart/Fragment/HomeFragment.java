@@ -3,29 +3,21 @@ package com.example.foottoheart.Fragment;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.foottoheart.MainActivity;
 import com.example.foottoheart.R;
-import com.example.foottoheart.SigninActivity;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
-
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -50,6 +42,7 @@ public class HomeFragment extends Fragment {
     Timer timer;
     static int first_dialog = 0;
     SharedPreferences preferences;
+    TextView mtoday;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,12 +59,15 @@ public class HomeFragment extends Fragment {
         count = 0;
         UserId = ((MainActivity)getActivity()).UserId;
 
-        Log.i("UserIdTest2",UserId);
+
 
 
         final ArcProgress arcProgress = (ArcProgress)getView().findViewById(R.id.fragmenthome_arcprogress);
+        mtoday = (TextView)getView().findViewById(R.id.fragmenthome_textview_today);
+        Calendar cal = Calendar.getInstance();
+        CalendarDay cald = CalendarDay.today();
 
-        // Calendar.DAY_OF_WEEK 1~7 -> 일~토
+        mtoday.setText(String.format("%04d년 %02d월 %02d일",cald.getYear(),cald.getMonth()+1,cald.getDay()));
 
 
         preferences = getActivity().getSharedPreferences("monday_nosee", Context.MODE_PRIVATE);
@@ -82,8 +78,9 @@ public class HomeFragment extends Fragment {
         reset.commit();
         */
         if(first_dialog == 0) {
+            //mondaydialog();
             if (!monday_nosee.equals("yes")) {
-                Calendar cal = Calendar.getInstance();
+
                 /* nodejs와 통신 코드 연습 */
                 // 월요일에만 받아줌
                 if (cal.get(Calendar.DAY_OF_WEEK) == 2) {
@@ -94,9 +91,7 @@ public class HomeFragment extends Fragment {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    for (int i = 0; i < exer_result.length(); i++) {
-                        Log.i("String", "" + i + exer_result.charAt(i));
-                    }
+
                     mondaydialog();
                     //monday_result.setText(exer_result);
                 } else { // 화~일
@@ -117,9 +112,8 @@ public class HomeFragment extends Fragment {
             public void run() {
                 //String Date = String.format("%04d-%02d-%02d", CalendarDay.today().getYear(),CalendarDay.today().getMonth()+1,CalendarDay.today().getDay());
                 String url = "http://34.216.194.87:3000/users"+ "/" + UserId;
-                Log.i("Test", "URL = " + url);
+
                 new JSONTask().execute(url);
-                Log.i("Test","1초마다 db에서 가져온다!" + Set++ + "Count = " + count);
                 if(count == -1) count = 0;
                 arcProgress.setProgress(count);
                 arcProgress.setBottomText("달성도 : "+ (int)(count/(float)arcProgress.getMax()*100) + "%");
@@ -169,18 +163,11 @@ public class HomeFragment extends Fragment {
                     //아래라인은 실제 reader에서 데이터를 가져오는 부분이다. 즉 node.js서버로부터 데이터를 가져온다.
                     while((line = reader.readLine()) != null){
                         count = Integer.parseInt(line);
-                        Log.i("Count", "Count = " + count);
+
                         buffer.append(line);
                         buffer.append(System.getProperty("line.separator"));
-                        /*
-                            {"id":0,"nickname':"abc","left_num:1,"right_num:0,"time":"2019-05-30T14:13:09.000Z","todal":null}
-                            과 같은 식의 데이터 들어옴.
 
-                         */
                     }
-                    Log.i("line",buffer.toString());
-                    //다 가져오면 String 형변환을 수행한다. 이유는 protected String doInBackground(String... urls) 니까
-
 
                     return buffer.toString();
 
@@ -253,9 +240,6 @@ public class HomeFragment extends Fragment {
                         buffer.append(System.getProperty("line.separator"));
                         break;
                     }
-                    Log.i("line",buffer.toString());
-                    //다 가져오면 String 형변환을 수행한다. 이유는 protected String doInBackground(String... urls) 니까
-
 
                     return buffer.toString();
 
@@ -299,9 +283,9 @@ public class HomeFragment extends Fragment {
 
         builder.setTitle("저번주 운동 결과");
         //exer_result =  "지난주는 풋피트 권장 운동량을 돌파하셨습니다! 지금과 같은 페이스를 유지한다면 심혈관질병률이 45%나 감소할 것입니다!";
+        //exer_result = "지난주는 풋피트 운동 달성량을 돌파하지 못했습니다! 운동 달성량을 돌파한 경우 심혈관질환 발병률이 45%나 감소할 것입니다! 이번주에는 도전해보세요!";
         StringBuffer buffer = new StringBuffer(exer_result);
         if(exer_result.length() == 83) {
-            Log.i("length", "" + exer_result.length());
             buffer.insert(16, '\n');
         }
         builder.setMessage(buffer);
