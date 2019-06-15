@@ -62,7 +62,6 @@ public class SigninActivity extends AppCompatActivity {
         mSignin.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 UserId = mloginid.getText().toString();
-                /*
 
                 if ( UserId.length() > 0 ) {
                     Log.i("Test","UserId = " + UserId);
@@ -73,9 +72,9 @@ public class SigninActivity extends AppCompatActivity {
                         new Thread(new SenderThread(UserId)).start();
                     }
                 }
-                */
 
-                String url = "http://34.216.194.87:3000/users"+ "/" + UserId;
+
+                String url = "http://34.220.25.253:3000/users"+ "/" + UserId;
                 new JSONTask().execute(url);
                 try {
                     Thread.sleep(500);
@@ -117,16 +116,16 @@ public class SigninActivity extends AppCompatActivity {
         });
 
         //임시로 연결성공했을 때의 화면을 보여줌.
-        mConnectionStatus.setText("connected to " + "192.168.43.117");
+        //mConnectionStatus.setText("connected to " + "192.168.43.117");
 
 
-        //new Thread(new ConnectThread("192.168.43.117", 8888)).start();
+        new Thread(new ConnectThread("192.168.43.117", 8888)).start();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //new Thread(new SenderThread("-")).start();
+        new Thread(new SenderThread("-")).start();
         isConnected = false;
     }
 
@@ -141,6 +140,7 @@ public class SigninActivity extends AppCompatActivity {
             serverPort = port;
 
             mConnectionStatus.setText("connecting to " + serverIP + ".......");
+            Log.i(TAG,"connecting to serverIP");
         }
 
         @Override

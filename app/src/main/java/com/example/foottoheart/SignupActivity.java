@@ -45,7 +45,7 @@ public class SignupActivity extends AppCompatActivity {
 
                 UserId = msignupid.getText().toString();
 
-                String url = "http://34.216.194.87:3000/add"+ "/" + UserId;
+                String url = "http://34.220.25.253:3000/add"+ "/" + UserId;
                 new JSONTask().execute(url);
                 try {
                     Thread.sleep(500);

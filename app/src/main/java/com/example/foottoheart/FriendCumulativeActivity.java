@@ -53,7 +53,7 @@ public class FriendCumulativeActivity extends AppCompatActivity {
         materialCalendarView = (MaterialCalendarView)findViewById(R.id.activityfriendcumulative_calendar);
         String date = String.format("%04d-%02d-%02d", CalendarDay.today().getYear(),CalendarDay.today().getMonth()+1,CalendarDay.today().getDay());
         datetextview.setText(String.format("%04d년 %02d월 %02d일",CalendarDay.today().getYear(),CalendarDay.today().getMonth()+1,CalendarDay.today().getDay()));
-        String url = "http://34.216.194.87:3000/month"+ "/" + date + "/" + friendid;
+        String url = "http://34.220.25.253:3000/month"+ "/" + date + "/" + friendid;
 
         new JSONTask().execute(url);
         arcProgress.setProgress(count);
@@ -72,7 +72,7 @@ public class FriendCumulativeActivity extends AppCompatActivity {
                 //임시
                 datetextview.setText(String.format("%04d년 %02d월 %02d일",date.getYear(),date.getMonth()+1,date.getDay()));
                 String Date = String.format("%04d-%02d-%02d",date.getYear(),date.getMonth()+1,date.getDay());
-                String url = "http://34.216.194.87:3000/month"+ "/" + Date + "/" + friendid;
+                String url = "http://34.220.25.253:3000/month"+ "/" + Date + "/" + friendid;
                 new JSONTask().execute(url);
                 new Handler().postDelayed(new Runnable() {
                     @Override

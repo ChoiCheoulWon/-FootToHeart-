@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.text.style.ForegroundColorSpan;
 
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,7 @@ public class CumulativeFragment extends Fragment {
         materialCalendarView = (MaterialCalendarView)getView().findViewById(R.id.fragmentcumulative_calendar);
         String date = String.format("%04d-%02d-%02d",CalendarDay.today().getYear(),CalendarDay.today().getMonth()+1,CalendarDay.today().getDay());
         datetextview.setText(String.format("%04d년 %02d월 %02d일",CalendarDay.today().getYear(),CalendarDay.today().getMonth()+1,CalendarDay.today().getDay()));
-        String url = "http://34.216.194.87:3000/month"+ "/" + date + "/" + UserId;
+        String url = "34.220.25.253:3000/month"+ "/" + date + "/" + UserId;
         new JSONTask().execute(url);
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -86,7 +87,8 @@ public class CumulativeFragment extends Fragment {
                 //임시
                 datetextview.setText(String.format("%04d년 %02d월 %02d일",date.getYear(),date.getMonth()+1,date.getDay()));
                 String Date = String.format("%04d-%02d-%02d",date.getYear(),date.getMonth()+1,date.getDay());
-                String url = "http://34.216.194.87:3000/month"+ "/" + Date + "/" + UserId;
+                String url = "http://34.220.25.253:3000/month"+ "/" + Date + "/" + UserId;
+                Log.i("urltest",url);
                 new JSONTask().execute(url);
                 new Handler().postDelayed(new Runnable() {
                     @Override

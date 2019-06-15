@@ -84,7 +84,7 @@ public class HomeFragment extends Fragment {
                 /* nodejs와 통신 코드 연습 */
                 // 월요일에만 받아줌
                 if (cal.get(Calendar.DAY_OF_WEEK) == 2) {
-                    String url = "http://34.216.194.87:3000/monday/" + UserId; // 세부내용 확인
+                    String url = "http://34.220.25.253:3000/monday/" + UserId; // 세부내용 확인
                     new JSONTask2().execute(url);
                     try {
                         Thread.sleep(2000);
@@ -111,7 +111,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void run() {
                 //String Date = String.format("%04d-%02d-%02d", CalendarDay.today().getYear(),CalendarDay.today().getMonth()+1,CalendarDay.today().getDay());
-                String url = "http://34.216.194.87:3000/users"+ "/" + UserId;
+                String url = "http://34.220.25.253:3000/users"+ "/" + UserId;
 
                 new JSONTask().execute(url);
                 if(count == -1) count = 0;

@@ -59,7 +59,7 @@ public class FriendFragment extends Fragment {
 
         mFriendList = new ArrayList<>();
         UserId = ((MainActivity)getActivity()).UserId;
-        String url = "http://34.216.194.87:3000/getfriend"+ "/" + UserId;
+        String url = "http://34.220.25.253:3000/getfriend"+ "/" + UserId;
 
         new JSONTask().execute(url);
         try {
@@ -123,7 +123,7 @@ public class FriendFragment extends Fragment {
                         //Toast.makeText(getApplicationContext(),edittext.getText().toString() ,Toast.LENGTH_LONG).show();
                         // db에서 이 사용자 아이디가 있으면 리스트에 추가해준다.
 
-                        String url = "http://34.216.194.87:3000/friend"+ "/" + UserId + "/" + friendid;
+                        String url = "http://34.220.25.253:3000/friend"+ "/" + UserId + "/" + friendid;
 
                         new JSONTask2().execute(url);
 
@@ -179,7 +179,7 @@ public class FriendFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
 
 
-                        String url = "http://34.216.194.87:3000/delete"+ "/" + UserId + "/" + friend;
+                        String url = "http://34.220.25.253:3000/delete"+ "/" + UserId + "/" + friend;
 
                         count = 0;
                         new JSONTask2().execute(url);
