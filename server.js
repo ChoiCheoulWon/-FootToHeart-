@@ -10,9 +10,9 @@ mysql = require('mysql');
 
 var connection = mysql.createConnection({
     host: 'localhost',
-    user: 'me',
-    password: 'mypassword',
-    database: 'mydb'
+    user: 'write username',
+    password: 'write password',
+    database: 'write db name'
 })
 connection.connect();
 /* ( I changed database table ; sensor -> temp )
